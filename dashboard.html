@@ -1,0 +1,540 @@
+<!doctype html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>BookFlow - Dashboard</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;family=Space+Grotesk:wght@600;700&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              error: "#ba1a1a",
+              "on-surface": "#1d1b19",
+              "on-primary-fixed-variant": "#005140",
+              "tertiary-fixed-dim": "#ffb4a8",
+              "surface-tint": "#226a57",
+              "on-tertiary-fixed": "#410100",
+              "on-error": "#ffffff",
+              "on-primary-container": "#8dd2bb",
+              "surface-variant": "#e6e2de",
+              "on-secondary": "#ffffff",
+              "tertiary-container": "#952c1f",
+              "on-secondary-container": "#714800",
+              "on-primary": "#ffffff",
+              "primary-fixed-dim": "#8fd4bd",
+              background: "#FAF7F2",
+              "on-error-container": "#93000a",
+              "tertiary-fixed": "#ffdad4",
+              "surface-bright": "#fdf8f4",
+              "surface-container-high": "#ece7e3",
+              "primary-container": "#0e5c4a",
+              "surface-container-highest": "#e6e2de",
+              "muted-ink": "#8A8478",
+              "on-primary-fixed": "#002018",
+              "surface-container-low": "#f8f3ef",
+              "on-surface-variant": "#3f4945",
+              "on-tertiary-container": "#ffb1a4",
+              "inverse-primary": "#8fd4bd",
+              "on-tertiary-fixed-variant": "#862115",
+              surface: "#FFFFFF",
+              "surface-container-lowest": "#ffffff",
+              "on-background": "#1d1b19",
+              primary: "#004334",
+              "surface-dim": "#ded9d5",
+              "on-tertiary": "#ffffff",
+              secondary: "#835400",
+              "secondary-fixed-dim": "#ffb956",
+              "inverse-on-surface": "#f5f0ec",
+              "inverse-surface": "#32302e",
+              "surface-container": "#f2ede9",
+              outline: "#6f7975",
+              "secondary-fixed": "#ffddb5",
+              "on-secondary-fixed-variant": "#633f00",
+              "outline-variant": "#bfc9c3",
+              "error-container": "#ffdad6",
+              tertiary: "#75140a",
+              "secondary-container": "#feb64b",
+              "primary-fixed": "#aaf1d9",
+              "on-secondary-fixed": "#2a1800",
+            },
+            borderRadius: {
+              DEFAULT: "0.25rem",
+              lg: "0.5rem",
+              xl: "0.75rem",
+              full: "9999px",
+            },
+            spacing: {
+              "stack-gap-sm": "8px",
+              "stack-gap-lg": "24px",
+              "stack-gap-md": "16px",
+              gutter: "12px",
+              "container-margin": "20px",
+            },
+            fontFamily: {
+              "display-lg": ["Space Grotesk"],
+              "body-lg": ["Inter"],
+              "stat-lg": ["Inter"],
+              "body-md": ["Inter"],
+              "headline-sm": ["Space Grotesk"],
+              "display-md": ["Space Grotesk"],
+              "label-md": ["Inter"],
+              "display-lg-mobile": ["Space Grotesk"],
+              "body-sm": ["Inter"],
+            },
+            fontSize: {
+              "display-lg": [
+                "32px",
+                {
+                  lineHeight: "40px",
+                  letterSpacing: "-0.02em",
+                  fontWeight: "700",
+                },
+              ],
+              "body-lg": [
+                "18px",
+                {
+                  lineHeight: "26px",
+                  fontWeight: "400",
+                },
+              ],
+              "stat-lg": [
+                "28px",
+                {
+                  lineHeight: "34px",
+                  letterSpacing: "-0.02em",
+                  fontWeight: "700",
+                },
+              ],
+              "body-md": [
+                "16px",
+                {
+                  lineHeight: "24px",
+                  fontWeight: "400",
+                },
+              ],
+              "headline-sm": [
+                "20px",
+                {
+                  lineHeight: "28px",
+                  fontWeight: "600",
+                },
+              ],
+              "display-md": [
+                "24px",
+                {
+                  lineHeight: "32px",
+                  letterSpacing: "-0.01em",
+                  fontWeight: "600",
+                },
+              ],
+              "label-md": [
+                "12px",
+                {
+                  lineHeight: "16px",
+                  letterSpacing: "0.05em",
+                  fontWeight: "600",
+                },
+              ],
+              "display-lg-mobile": [
+                "28px",
+                {
+                  lineHeight: "36px",
+                  fontWeight: "700",
+                },
+              ],
+              "body-sm": [
+                "14px",
+                {
+                  lineHeight: "20px",
+                  fontWeight: "400",
+                },
+              ],
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      body {
+        min-height: max(884px, 100dvh);
+      }
+    </style>
+  </head>
+  <body
+    class="bg-background text-on-surface antialiased min-h-screen pb-[100px]"
+  >
+    <!-- TopAppBar -->
+    <header
+      class="docked full-width top-0 bg-background dark:bg-background flat no shadows transition-all duration-200 active:scale-95 flex justify-between items-center px-container-margin py-4 w-full sticky z-40"
+    >
+      <div class="flex items-center gap-3">
+        <img
+          class="w-10 h-10 rounded-full object-cover"
+          data-alt="A professional close-up portrait of a young male entrepreneur with a warm smile, wearing a casual but smart dark emerald green shirt. The lighting is soft and natural, suggesting a bright morning. The background is slightly blurred showing a modern, minimalist home office setting with neutral tones and a hint of a green plant. Professional corporate headshot style optimized for a circular avatar profile picture."
+          src="https://lh3.googleusercontent.com/aida-public/AB6AXuDmTm_DmGPSIxGo8Jxy4L3X_SP8TgjiJhUdxm6dBKco3ThkTE8FFWU0hZmxfn_mdYenFo-1A6xNzw9bq0DKOlKli1DpHglWrrlA0A5R0Xk4HklWLaxEeiEH8vS2eq6pfenyAm-RABePNQkcEZO5VGByej2nLJWljCQJaf9a0vnnncAgTVRn9yxUNk3UmhA3Cf4a3EqShG64J8em2LVm_wRdBh38tYNol7LPwYerAiBUHIMjJtKWHWWi"
+        />
+        <div>
+          <h1
+            class="font-display-md text-display-md-mobile text-primary dark:text-primary-fixed-dim"
+          >
+            BookFlow
+          </h1>
+        </div>
+      </div>
+      <button
+        class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-variant transition-colors text-primary dark:text-primary-fixed-dim hover:opacity-80"
+      >
+        <span class="material-symbols-outlined" data-icon="notifications"
+          >notifications</span
+        >
+      </button>
+    </header>
+    <main class="px-container-margin pt-2">
+      <!-- Header Section -->
+      <section class="mb-stack-gap-lg">
+        <h2
+          class="font-display-lg-mobile text-display-lg-mobile text-on-surface mb-1"
+        >
+          Hi, Danish 👋
+        </h2>
+        <p class="font-body-md text-body-md text-muted-ink">Friday, 21 July</p>
+      </section>
+      <!-- Stat Cards Horizontal Scroll -->
+      <section
+        class="flex gap-4 overflow-x-auto pb-4 -mx-container-margin px-container-margin snap-x scrollbar-hide mb-stack-gap-lg"
+      >
+        <!-- Stat Card 1 -->
+        <div
+          class="bg-surface rounded-xl p-4 min-w-[140px] shadow-[0_-4px_15px_rgba(22,21,19,0.04)] snap-start shrink-0"
+        >
+          <p class="font-label-md text-label-md text-muted-ink mb-1 uppercase">
+            Revenue
+          </p>
+          <p class="font-stat-lg text-stat-lg text-primary">RM 5,900</p>
+        </div>
+        <!-- Stat Card 2 -->
+        <div
+          class="bg-surface rounded-xl p-4 min-w-[120px] shadow-[0_-4px_15px_rgba(22,21,19,0.04)] snap-start shrink-0"
+        >
+          <p class="font-label-md text-label-md text-muted-ink mb-1 uppercase">
+            Bookings
+          </p>
+          <p class="font-stat-lg text-stat-lg text-on-surface">6</p>
+        </div>
+        <!-- Stat Card 3 -->
+        <div
+          class="bg-surface rounded-xl p-4 min-w-[160px] shadow-[0_-4px_15px_rgba(22,21,19,0.04)] snap-start shrink-0"
+        >
+          <p class="font-label-md text-label-md text-muted-ink mb-1 uppercase">
+            Still owed
+          </p>
+          <p class="font-stat-lg text-stat-lg text-secondary">RM 3,150</p>
+        </div>
+      </section>
+      <!-- Quick Add Prompt -->
+      <section class="mb-stack-gap-lg">
+        <div
+          class="bg-primary-container text-on-primary-container rounded-[20px] p-5 shadow-sm border border-primary-container/20 flex items-center justify-between cursor-pointer active:scale-[0.98] transition-transform"
+        >
+          <div class="flex items-center gap-3">
+            <div
+              class="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center"
+            >
+              <span
+                class="material-symbols-outlined text-on-primary-container"
+                data-icon="content_paste"
+                >content_paste</span
+              >
+            </div>
+            <p class="font-body-md text-body-md font-semibold text-on-primary">
+              Paste a WhatsApp message to add a booking
+            </p>
+          </div>
+          <span
+            class="material-symbols-outlined text-on-primary-container"
+            data-icon="arrow_forward"
+            >arrow_forward</span
+          >
+        </div>
+      </section>
+      <!-- Today Section -->
+      <section class="mb-stack-gap-lg">
+        <h3
+          class="font-headline-sm text-headline-sm text-on-surface mb-stack-gap-md"
+        >
+          Today
+        </h3>
+        <div
+          class="border border-dashed border-outline-variant rounded-[20px] p-8 text-center bg-surface-container-low/50"
+        >
+          <p class="font-body-md text-body-md text-muted-ink">
+            Nothing on today — enjoy the breather.
+          </p>
+        </div>
+      </section>
+      <!-- Coming Up Section -->
+      <section class="mb-stack-gap-lg">
+        <h3
+          class="font-headline-sm text-headline-sm text-on-surface mb-stack-gap-md"
+        >
+          Coming up
+        </h3>
+        <div class="flex flex-col gap-stack-gap-md">
+          <!-- Booking Card 1 -->
+          <article
+            class="bg-surface rounded-[20px] p-5 shadow-[0_-4px_15px_rgba(22,21,19,0.04)] border border-surface-variant/50"
+          >
+            <div class="flex justify-between items-start mb-3">
+              <div>
+                <h4
+                  class="font-headline-sm text-headline-sm text-on-surface mb-1"
+                >
+                  Aisha &amp; Faiz Wedding
+                </h4>
+                <p class="font-body-sm text-body-sm text-muted-ink">
+                  Photo Booth
+                </p>
+              </div>
+              <div
+                class="bg-primary/10 text-primary px-3 py-1.5 rounded-full font-label-md text-label-md"
+              >
+                Deposit paid
+              </div>
+            </div>
+            <div class="grid grid-cols-1 gap-2 mb-4">
+              <div
+                class="flex items-center gap-2 text-on-surface-variant font-body-sm text-body-sm"
+              >
+                <span
+                  class="material-symbols-outlined text-[18px]"
+                  data-icon="calendar_today"
+                  >calendar_today</span
+                >
+                Sat 26 Jul, 7:00 PM
+              </div>
+              <div
+                class="flex items-center gap-2 text-on-surface-variant font-body-sm text-body-sm"
+              >
+                <span
+                  class="material-symbols-outlined text-[18px]"
+                  data-icon="location_on"
+                  >location_on</span
+                >
+                Setia City Convention
+              </div>
+            </div>
+            <div
+              class="pt-4 border-t border-surface-variant flex justify-between items-center"
+            >
+              <span class="font-label-md text-label-md text-muted-ink uppercase"
+                >Total</span
+              >
+              <span
+                class="font-body-md text-body-md font-semibold text-on-surface"
+                >RM 1,800</span
+              >
+            </div>
+          </article>
+          <!-- Booking Card 2 -->
+          <article
+            class="bg-surface rounded-[20px] p-5 shadow-[0_-4px_15px_rgba(22,21,19,0.04)] border border-surface-variant/50"
+          >
+            <div class="flex justify-between items-start mb-3">
+              <div>
+                <h4
+                  class="font-headline-sm text-headline-sm text-on-surface mb-1"
+                >
+                  Tech Sdn Bhd — Corporate Dinner
+                </h4>
+                <p class="font-body-sm text-body-sm text-muted-ink">
+                  Photo Booth
+                </p>
+              </div>
+              <div
+                class="bg-secondary/10 text-secondary px-3 py-1.5 rounded-full font-label-md text-label-md"
+              >
+                Deposit pending
+              </div>
+            </div>
+            <div class="grid grid-cols-1 gap-2 mb-4">
+              <div
+                class="flex items-center gap-2 text-on-surface-variant font-body-sm text-body-sm"
+              >
+                <span
+                  class="material-symbols-outlined text-[18px]"
+                  data-icon="calendar_today"
+                  >calendar_today</span
+                >
+                Fri 1 Aug, 8:00 PM
+              </div>
+              <div
+                class="flex items-center gap-2 text-on-surface-variant font-body-sm text-body-sm"
+              >
+                <span
+                  class="material-symbols-outlined text-[18px]"
+                  data-icon="location_on"
+                  >location_on</span
+                >
+                One World Hotel, PJ
+              </div>
+            </div>
+            <div
+              class="pt-4 border-t border-surface-variant flex justify-between items-center"
+            >
+              <span class="font-label-md text-label-md text-muted-ink uppercase"
+                >Total</span
+              >
+              <span
+                class="font-body-md text-body-md font-semibold text-on-surface"
+                >RM 1,500</span
+              >
+            </div>
+          </article>
+          <!-- Booking Card 3 -->
+          <article
+            class="bg-surface rounded-[20px] p-5 shadow-[0_-4px_15px_rgba(22,21,19,0.04)] border border-surface-variant/50"
+          >
+            <div class="flex justify-between items-start mb-3">
+              <div>
+                <h4
+                  class="font-headline-sm text-headline-sm text-on-surface mb-1"
+                >
+                  Dania's 21st Birthday
+                </h4>
+                <p class="font-body-sm text-body-sm text-muted-ink">
+                  Photo Booth
+                </p>
+              </div>
+              <div
+                class="bg-primary/10 text-primary px-3 py-1.5 rounded-full font-label-md text-label-md"
+              >
+                Deposit paid
+              </div>
+            </div>
+            <div class="grid grid-cols-1 gap-2 mb-4">
+              <div
+                class="flex items-center gap-2 text-on-surface-variant font-body-sm text-body-sm"
+              >
+                <span
+                  class="material-symbols-outlined text-[18px]"
+                  data-icon="calendar_today"
+                  >calendar_today</span
+                >
+                Sun 3 Aug, 4:00 PM
+              </div>
+              <div
+                class="flex items-center gap-2 text-on-surface-variant font-body-sm text-body-sm"
+              >
+                <span
+                  class="material-symbols-outlined text-[18px]"
+                  data-icon="location_on"
+                  >location_on</span
+                >
+                Private residence, USJ 9
+              </div>
+            </div>
+            <div
+              class="pt-4 border-t border-surface-variant flex justify-between items-center"
+            >
+              <span class="font-label-md text-label-md text-muted-ink uppercase"
+                >Total</span
+              >
+              <span
+                class="font-body-md text-body-md font-semibold text-on-surface"
+                >RM 950</span
+              >
+            </div>
+          </article>
+        </div>
+      </section>
+    </main>
+    <!-- BottomNavBar -->
+    <nav
+      class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-gutter pb-safe bg-surface/80 dark:bg-surface-container/80 backdrop-blur-md shadow-[0_-4px_15px_rgba(22,21,19,0.04)] h-20 md:hidden"
+    >
+      <button
+        class="flex flex-col items-center justify-center text-primary dark:text-primary-fixed-dim hover:opacity-80 transition-opacity w-16 h-16"
+      >
+        <span
+          class="material-symbols-outlined mb-1 text-[24px]"
+          data-icon="home"
+          data-weight="fill"
+          style="font-variation-settings: &quot;FILL&quot; 1"
+          >home</span
+        >
+        <span class="font-label-md text-label-md">Home</span>
+      </button>
+      <button
+        class="flex flex-col items-center justify-center text-muted-ink dark:text-outline hover:text-primary dark:hover:text-primary-fixed transition-colors w-16 h-16"
+      >
+        <span
+          class="material-symbols-outlined mb-1 text-[24px]"
+          data-icon="event_available"
+          >event_available</span
+        >
+        <span class="font-label-md text-label-md">Bookings</span>
+      </button>
+      <div class="w-14 relative flex justify-center">
+        <button
+          class="bg-primary text-on-primary rounded-full w-14 h-14 absolute -top-10 flex items-center justify-center shadow-lg hover:scale-105 active:scale-95 transition-transform"
+        >
+          <span class="material-symbols-outlined text-[28px]" data-icon="add"
+            >add</span
+          >
+        </button>
+        <span
+          class="font-label-md text-label-md text-muted-ink absolute bottom-1"
+          >Add</span
+        >
+      </div>
+      <button
+        class="flex flex-col items-center justify-center text-muted-ink dark:text-outline hover:text-primary dark:hover:text-primary-fixed transition-colors w-16 h-16"
+      >
+        <span
+          class="material-symbols-outlined mb-1 text-[24px]"
+          data-icon="calendar_month"
+          >calendar_month</span
+        >
+        <span class="font-label-md text-label-md">Calendar</span>
+      </button>
+      <button
+        class="flex flex-col items-center justify-center text-muted-ink dark:text-outline hover:text-primary dark:hover:text-primary-fixed transition-colors w-16 h-16"
+      >
+        <span
+          class="material-symbols-outlined mb-1 text-[24px]"
+          data-icon="payments"
+          >payments</span
+        >
+        <span class="font-label-md text-label-md">Money</span>
+      </button>
+    </nav>
+    <style>
+      .scrollbar-hide::-webkit-scrollbar {
+        display: none;
+      }
+      .scrollbar-hide {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+      .pb-safe {
+        padding-bottom: env(safe-area-inset-bottom, 20px);
+      }
+    </style>
+  </body>
+</html>

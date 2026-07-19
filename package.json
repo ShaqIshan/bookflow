@@ -1,0 +1,12 @@
+{
+  "name": "bookflow-workspace",
+  "private": true,
+  "description": "Run npm commands from this folder — they are forwarded into bookflow-app/",
+  "scripts": {
+    "setup": "npm --prefix bookflow-app install",
+    "dev": "npm --prefix bookflow-app run dev",
+    "build": "npm --prefix bookflow-app run build",
+    "test": "npm --prefix bookflow-app test",
+    "lint": "npm --prefix bookflow-app run lint"
+  }
+}

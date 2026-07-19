@@ -1,0 +1,21 @@
+# Deploy BookFlow to Netlify
+# Option A (repo deploy): set "Base directory" to bookflow-app in site settings,
+#   or push with this file at the base directory — Netlify picks it up.
+# Option B (no git): run `npm run build` locally and drag the `out/` folder
+#   onto https://app.netlify.com/drop
+
+[build]
+  command = "npm run build"
+  publish = "out"
+
+[[headers]]
+  for = "/sw.js"
+  [headers.values]
+    Cache-Control = "no-cache"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"

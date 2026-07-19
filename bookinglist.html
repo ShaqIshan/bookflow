@@ -1,0 +1,613 @@
+<!doctype html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Bookings - BookFlow</title>
+    <!-- Material Symbols -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;family=Space+Grotesk:wght@600;700&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <!-- Tailwind Config -->
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              error: "#ba1a1a",
+              "on-surface": "#1d1b19",
+              "on-primary-fixed-variant": "#005140",
+              "tertiary-fixed-dim": "#ffb4a8",
+              "surface-tint": "#226a57",
+              "on-tertiary-fixed": "#410100",
+              "on-error": "#ffffff",
+              "on-primary-container": "#8dd2bb",
+              "surface-variant": "#e6e2de",
+              "on-secondary": "#ffffff",
+              "tertiary-container": "#952c1f",
+              "on-secondary-container": "#714800",
+              "on-primary": "#ffffff",
+              "primary-fixed-dim": "#8fd4bd",
+              background: "#FAF7F2",
+              "on-error-container": "#93000a",
+              "tertiary-fixed": "#ffdad4",
+              "surface-bright": "#fdf8f4",
+              "surface-container-high": "#ece7e3",
+              "primary-container": "#0e5c4a",
+              "surface-container-highest": "#e6e2de",
+              "muted-ink": "#8A8478",
+              "on-primary-fixed": "#002018",
+              "surface-container-low": "#f8f3ef",
+              "on-surface-variant": "#3f4945",
+              "on-tertiary-container": "#ffb1a4",
+              "inverse-primary": "#8fd4bd",
+              "on-tertiary-fixed-variant": "#862115",
+              surface: "#FFFFFF",
+              "surface-container-lowest": "#ffffff",
+              "on-background": "#1d1b19",
+              primary: "#004334",
+              "surface-dim": "#ded9d5",
+              "on-tertiary": "#ffffff",
+              secondary: "#835400",
+              "secondary-fixed-dim": "#ffb956",
+              "inverse-on-surface": "#f5f0ec",
+              "inverse-surface": "#32302e",
+              "surface-container": "#f2ede9",
+              outline: "#6f7975",
+              "secondary-fixed": "#ffddb5",
+              "on-secondary-fixed-variant": "#633f00",
+              "outline-variant": "#bfc9c3",
+              "error-container": "#ffdad6",
+              tertiary: "#75140a",
+              "secondary-container": "#feb64b",
+              "primary-fixed": "#aaf1d9",
+              "on-secondary-fixed": "#2a1800",
+            },
+            borderRadius: {
+              DEFAULT: "0.25rem",
+              lg: "0.5rem",
+              xl: "0.75rem",
+              full: "9999px",
+            },
+            spacing: {
+              "stack-gap-sm": "8px",
+              "stack-gap-lg": "24px",
+              "stack-gap-md": "16px",
+              gutter: "12px",
+              "container-margin": "20px",
+            },
+            fontFamily: {
+              "display-lg": ["Space Grotesk"],
+              "body-lg": ["Inter"],
+              "stat-lg": ["Inter"],
+              "body-md": ["Inter"],
+              "headline-sm": ["Space Grotesk"],
+              "display-md": ["Space Grotesk"],
+              "label-md": ["Inter"],
+              "display-lg-mobile": ["Space Grotesk"],
+              "body-sm": ["Inter"],
+            },
+            fontSize: {
+              "display-lg": [
+                "32px",
+                {
+                  lineHeight: "40px",
+                  letterSpacing: "-0.02em",
+                  fontWeight: "700",
+                },
+              ],
+              "body-lg": [
+                "18px",
+                {
+                  lineHeight: "26px",
+                  fontWeight: "400",
+                },
+              ],
+              "stat-lg": [
+                "28px",
+                {
+                  lineHeight: "34px",
+                  letterSpacing: "-0.02em",
+                  fontWeight: "700",
+                },
+              ],
+              "body-md": [
+                "16px",
+                {
+                  lineHeight: "24px",
+                  fontWeight: "400",
+                },
+              ],
+              "headline-sm": [
+                "20px",
+                {
+                  lineHeight: "28px",
+                  fontWeight: "600",
+                },
+              ],
+              "display-md": [
+                "24px",
+                {
+                  lineHeight: "32px",
+                  letterSpacing: "-0.01em",
+                  fontWeight: "600",
+                },
+              ],
+              "label-md": [
+                "12px",
+                {
+                  lineHeight: "16px",
+                  letterSpacing: "0.05em",
+                  fontWeight: "600",
+                },
+              ],
+              "display-lg-mobile": [
+                "28px",
+                {
+                  lineHeight: "36px",
+                  fontWeight: "700",
+                },
+              ],
+              "body-sm": [
+                "14px",
+                {
+                  lineHeight: "20px",
+                  fontWeight: "400",
+                },
+              ],
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      .material-symbols-outlined {
+        font-variation-settings:
+          "FILL" 0,
+          "wght" 400,
+          "GRAD" 0,
+          "opsz" 24;
+      }
+      .icon-fill {
+        font-variation-settings:
+          "FILL" 1,
+          "wght" 400,
+          "GRAD" 0,
+          "opsz" 24;
+      }
+      /* Custom scrollbar hiding for horizontal scrolls */
+      .no-scrollbar::-webkit-scrollbar {
+        display: none;
+      }
+      .no-scrollbar {
+        -ms-overflow-style: none; /* IE and Edge */
+        scrollbar-width: none; /* Firefox */
+      }
+    </style>
+    <style>
+      body {
+        min-height: max(884px, 100dvh);
+      }
+    </style>
+  </head>
+  <body class="bg-background text-on-background antialiased min-h-screen pb-32">
+    <!-- TopAppBar -->
+    <header
+      class="sticky top-0 z-40 bg-background flex justify-between items-center px-container-margin py-4 w-full flat no shadows"
+    >
+      <button
+        class="w-10 h-10 rounded-full overflow-hidden flex-shrink-0 transition-all duration-200 active:scale-95 hover:opacity-80 focus:outline-none"
+      >
+        <img
+          alt="User Profile"
+          class="w-full h-full object-cover"
+          data-alt="A professional headshot of a confident solo entrepreneur smiling slightly. Bright, natural lighting, modern minimalist background, light mode aesthetic, warm and approachable mood."
+          src="https://lh3.googleusercontent.com/aida-public/AB6AXuDVXfjlKArl7mJXpCFMzr0UWnhjOkX6yTxagRLiWvyWytBsMNpRrUYnBy5dXj7NJ6qfuuTGsxq3fgFv-bZSzAlSeZuoeR6rpNZd0gwXDf91wiQguMBvqXOUAlZuHJ6GvqXzG4ZmR2Pqpok6kbFJGXu9mOrnK__I913uYFd8eefe_bGeS5Lduhv9Byyfu3FQdxlncG5ztauxjYLzZ0sETmdcErhwYJU2jQjn6itZ-lwDqsX4A2BPf2Xl"
+        />
+      </button>
+      <div class="text-display-md-mobile font-display-md text-primary">
+        BookFlow
+      </div>
+      <button
+        class="w-10 h-10 flex items-center justify-center text-primary transition-all duration-200 active:scale-95 hover:opacity-80 focus:outline-none"
+      >
+        <span class="material-symbols-outlined" data-icon="notifications"
+          >notifications</span
+        >
+      </button>
+    </header>
+    <!-- Main Content -->
+    <main class="px-container-margin pt-4">
+      <!-- Search Bar -->
+      <div class="relative mb-stack-gap-md">
+        <span
+          class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-muted-ink"
+          data-icon="search"
+          >search</span
+        >
+        <input
+          class="w-full h-[48px] bg-surface rounded-[14px] border border-outline-variant/30 pl-12 pr-4 font-body-md text-body-md text-on-surface placeholder:text-muted-ink focus:outline-none focus:ring-1 focus:ring-primary shadow-[0_2px_8px_rgba(22,21,19,0.02)] transition-all"
+          placeholder="Search client, venue, date…"
+          type="text"
+        />
+      </div>
+      <!-- Filter Chips -->
+      <div
+        class="flex gap-2 overflow-x-auto no-scrollbar mb-stack-gap-md pb-2 -mx-container-margin px-container-margin"
+      >
+        <button
+          class="h-[40px] px-5 rounded-full bg-primary text-on-primary font-label-md text-label-md flex-shrink-0 transition-colors"
+        >
+          All
+        </button>
+        <button
+          class="h-[40px] px-5 rounded-full bg-surface text-on-surface border border-outline-variant/30 font-label-md text-label-md flex-shrink-0 hover:bg-surface-container transition-colors"
+        >
+          Upcoming
+        </button>
+        <button
+          class="h-[40px] px-5 rounded-full bg-surface text-on-surface border border-outline-variant/30 font-label-md text-label-md flex-shrink-0 hover:bg-surface-container transition-colors"
+        >
+          Deposit pending
+        </button>
+        <button
+          class="h-[40px] px-5 rounded-full bg-surface text-on-surface border border-outline-variant/30 font-label-md text-label-md flex-shrink-0 hover:bg-surface-container transition-colors"
+        >
+          Past
+        </button>
+      </div>
+      <!-- Revenue Strip -->
+      <div class="flex justify-between items-center mb-stack-gap-md px-1">
+        <span class="font-label-md text-label-md text-muted-ink"
+          >Showing 6 bookings</span
+        >
+        <span class="font-headline-sm text-headline-sm text-primary"
+          >RM 5,900</span
+        >
+      </div>
+      <!-- Bookings List -->
+      <div class="flex flex-col gap-stack-gap-md">
+        <!-- Card 1 -->
+        <article
+          class="bg-surface rounded-[20px] p-4 shadow-[0_4px_15px_rgba(22,21,19,0.04)] border border-surface-variant/50 relative overflow-hidden"
+        >
+          <div class="flex justify-between items-start mb-3">
+            <div>
+              <h3 class="font-headline-sm text-headline-sm text-on-surface">
+                Aisha &amp; Faiz
+              </h3>
+              <p class="font-body-sm text-body-sm text-muted-ink">
+                Wedding Photography
+              </p>
+            </div>
+            <div
+              class="bg-primary/10 text-primary px-3 py-1 rounded-full font-label-md text-label-md flex items-center gap-1"
+            >
+              <span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+              Confirmed
+            </div>
+          </div>
+          <div
+            class="flex flex-col gap-2 mb-4 font-body-sm text-body-sm text-on-surface-variant"
+          >
+            <div class="flex items-center gap-2">
+              <span
+                class="material-symbols-outlined text-muted-ink text-[18px]"
+                data-icon="calendar_today"
+                >calendar_today</span
+              >
+              <span>Sat, 24 Aug 2024 • 10:00 AM</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <span
+                class="material-symbols-outlined text-muted-ink text-[18px]"
+                data-icon="location_on"
+                >location_on</span
+              >
+              <span>Glasshouse at Seputeh</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <span
+                class="material-symbols-outlined text-muted-ink text-[18px]"
+                data-icon="payments"
+                >payments</span
+              >
+              <span class="font-semibold text-on-surface">RM 2,500</span>
+            </div>
+          </div>
+          <div
+            class="flex justify-between items-center pt-3 border-t border-surface-variant/50"
+          >
+            <div class="flex gap-2">
+              <button
+                class="w-10 h-10 flex items-center justify-center rounded-full bg-surface-container-low text-primary hover:bg-surface-container transition-colors"
+                title="Edit"
+              >
+                <span
+                  class="material-symbols-outlined text-[20px]"
+                  data-icon="edit"
+                  >edit</span
+                >
+              </button>
+              <button
+                class="w-10 h-10 flex items-center justify-center rounded-full bg-surface-container-low text-primary hover:bg-surface-container transition-colors"
+                title="Invoice"
+              >
+                <span
+                  class="material-symbols-outlined text-[20px]"
+                  data-icon="receipt_long"
+                  >receipt_long</span
+                >
+              </button>
+            </div>
+            <button
+              class="h-10 px-4 rounded-[14px] bg-primary/5 text-primary font-label-md text-label-md flex items-center gap-2 hover:bg-primary/10 transition-colors"
+            >
+              <span
+                class="material-symbols-outlined text-[18px]"
+                data-icon="chat"
+                >chat</span
+              >
+              Message
+            </button>
+          </div>
+        </article>
+        <!-- Card 2 -->
+        <article
+          class="bg-surface rounded-[20px] p-4 shadow-[0_4px_15px_rgba(22,21,19,0.04)] border border-surface-variant/50 relative overflow-hidden"
+        >
+          <div class="flex justify-between items-start mb-3">
+            <div>
+              <h3 class="font-headline-sm text-headline-sm text-on-surface">
+                KWSP Dept
+              </h3>
+              <p class="font-body-sm text-body-sm text-muted-ink">
+                Corporate Portrait
+              </p>
+            </div>
+            <div
+              class="bg-secondary-container/20 text-secondary px-3 py-1 rounded-full font-label-md text-label-md flex items-center gap-1"
+            >
+              <span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+              Pending Deposit
+            </div>
+          </div>
+          <div
+            class="flex flex-col gap-2 mb-4 font-body-sm text-body-sm text-on-surface-variant"
+          >
+            <div class="flex items-center gap-2">
+              <span
+                class="material-symbols-outlined text-muted-ink text-[18px]"
+                data-icon="calendar_today"
+                >calendar_today</span
+              >
+              <span>Mon, 26 Aug 2024 • 09:00 AM</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <span
+                class="material-symbols-outlined text-muted-ink text-[18px]"
+                data-icon="location_on"
+                >location_on</span
+              >
+              <span>KWSP HQ, Shah Alam</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <span
+                class="material-symbols-outlined text-muted-ink text-[18px]"
+                data-icon="payments"
+                >payments</span
+              >
+              <span class="font-semibold text-on-surface">RM 1,650</span>
+            </div>
+          </div>
+          <div
+            class="flex justify-between items-center pt-3 border-t border-surface-variant/50"
+          >
+            <div class="flex gap-2">
+              <button
+                class="w-10 h-10 flex items-center justify-center rounded-full bg-surface-container-low text-primary hover:bg-surface-container transition-colors"
+                title="Edit"
+              >
+                <span
+                  class="material-symbols-outlined text-[20px]"
+                  data-icon="edit"
+                  >edit</span
+                >
+              </button>
+              <button
+                class="w-10 h-10 flex items-center justify-center rounded-full bg-surface-container-low text-primary hover:bg-surface-container transition-colors"
+                title="Invoice"
+              >
+                <span
+                  class="material-symbols-outlined text-[20px]"
+                  data-icon="receipt_long"
+                  >receipt_long</span
+                >
+              </button>
+            </div>
+            <button
+              class="h-10 px-4 rounded-[14px] bg-primary/5 text-primary font-label-md text-label-md flex items-center gap-2 hover:bg-primary/10 transition-colors"
+            >
+              <span
+                class="material-symbols-outlined text-[18px]"
+                data-icon="chat"
+                >chat</span
+              >
+              Message
+            </button>
+          </div>
+        </article>
+        <!-- Card 3 -->
+        <article
+          class="bg-surface rounded-[20px] p-4 shadow-[0_4px_15px_rgba(22,21,19,0.04)] border border-surface-variant/50 relative overflow-hidden opacity-80"
+        >
+          <div class="flex justify-between items-start mb-3">
+            <div>
+              <h3 class="font-headline-sm text-headline-sm text-on-surface">
+                Nurin's Engagement
+              </h3>
+              <p class="font-body-sm text-body-sm text-muted-ink">
+                Event Coverage
+              </p>
+            </div>
+            <div
+              class="bg-surface-variant text-on-surface-variant px-3 py-1 rounded-full font-label-md text-label-md flex items-center gap-1"
+            >
+              <span
+                class="w-1.5 h-1.5 rounded-full bg-on-surface-variant"
+              ></span>
+              Paid
+            </div>
+          </div>
+          <div
+            class="flex flex-col gap-2 mb-4 font-body-sm text-body-sm text-on-surface-variant"
+          >
+            <div class="flex items-center gap-2">
+              <span
+                class="material-symbols-outlined text-muted-ink text-[18px]"
+                data-icon="calendar_today"
+                >calendar_today</span
+              >
+              <span>Sun, 18 Aug 2024 • 02:00 PM</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <span
+                class="material-symbols-outlined text-muted-ink text-[18px]"
+                data-icon="location_on"
+                >location_on</span
+              >
+              <span>Boraombak Marina, Putrajaya</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <span
+                class="material-symbols-outlined text-muted-ink text-[18px]"
+                data-icon="payments"
+                >payments</span
+              >
+              <span class="font-semibold text-on-surface">RM 1,100</span>
+            </div>
+          </div>
+          <div
+            class="flex justify-between items-center pt-3 border-t border-surface-variant/50"
+          >
+            <div class="flex gap-2">
+              <button
+                class="w-10 h-10 flex items-center justify-center rounded-full bg-surface-container-low text-primary hover:bg-surface-container transition-colors"
+                title="Edit"
+              >
+                <span
+                  class="material-symbols-outlined text-[20px]"
+                  data-icon="edit"
+                  >edit</span
+                >
+              </button>
+              <button
+                class="w-10 h-10 flex items-center justify-center rounded-full bg-surface-container-low text-primary hover:bg-surface-container transition-colors"
+                title="Invoice"
+              >
+                <span
+                  class="material-symbols-outlined text-[20px]"
+                  data-icon="receipt_long"
+                  >receipt_long</span
+                >
+              </button>
+            </div>
+            <button
+              class="h-10 px-4 rounded-[14px] bg-primary/5 text-primary font-label-md text-label-md flex items-center gap-2 hover:bg-primary/10 transition-colors"
+            >
+              <span
+                class="material-symbols-outlined text-[18px]"
+                data-icon="chat"
+                >chat</span
+              >
+              Message
+            </button>
+          </div>
+        </article>
+      </div>
+    </main>
+    <!-- BottomNavBar -->
+    <nav
+      class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-gutter pb-safe h-20 bg-surface/80 backdrop-blur-md shadow-[0_-4px_15px_rgba(22,21,19,0.04)]"
+    >
+      <!-- Home (Inactive) -->
+      <a
+        class="flex flex-col items-center justify-center text-muted-ink hover:text-primary transition-colors flex-1 h-full"
+        href="#"
+      >
+        <span
+          class="material-symbols-outlined mb-1 text-[24px]"
+          data-icon="home"
+          >home</span
+        >
+        <span class="font-label-md text-label-md">Home</span>
+      </a>
+      <!-- Bookings (Active) -->
+      <a
+        class="flex flex-col items-center justify-center text-primary flex-1 h-full"
+        href="#"
+      >
+        <span
+          class="material-symbols-outlined mb-1 text-[24px] icon-fill"
+          data-icon="event_available"
+          >event_available</span
+        >
+        <span class="font-label-md text-label-md">Bookings</span>
+      </a>
+      <!-- Add (Center FAB) -->
+      <div class="flex-1 flex justify-center relative h-full">
+        <button
+          class="bg-primary text-on-primary rounded-full w-14 h-14 absolute -top-5 flex items-center justify-center shadow-lg transition-transform active:scale-95 hover:bg-primary/90 focus:outline-none"
+        >
+          <span class="material-symbols-outlined text-[28px]" data-icon="add"
+            >add</span
+          >
+        </button>
+        <span
+          class="font-label-md text-label-md text-muted-ink absolute bottom-3"
+          >Add</span
+        >
+      </div>
+      <!-- Calendar (Inactive) -->
+      <a
+        class="flex flex-col items-center justify-center text-muted-ink hover:text-primary transition-colors flex-1 h-full"
+        href="#"
+      >
+        <span
+          class="material-symbols-outlined mb-1 text-[24px]"
+          data-icon="calendar_month"
+          >calendar_month</span
+        >
+        <span class="font-label-md text-label-md">Calendar</span>
+      </a>
+      <!-- Money (Inactive) -->
+      <a
+        class="flex flex-col items-center justify-center text-muted-ink hover:text-primary transition-colors flex-1 h-full"
+        href="#"
+      >
+        <span
+          class="material-symbols-outlined mb-1 text-[24px]"
+          data-icon="payments"
+          >payments</span
+        >
+        <span class="font-label-md text-label-md">Money</span>
+      </a>
+    </nav>
+  </body>
+</html>
