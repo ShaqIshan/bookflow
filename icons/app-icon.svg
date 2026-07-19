@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48" role="img" aria-label="BookFlow app icon">
+  <title>BookFlow</title>
+  <defs>
+    <linearGradient id="bf-bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#116A55"/>
+      <stop offset="1" stop-color="#0A4638"/>
+    </linearGradient>
+  </defs>
+  <!-- Rounded app container -->
+  <rect x="0" y="0" width="48" height="48" rx="13" fill="url(#bf-bg)"/>
+  <!-- Chat bubble in warm paper -->
+  <path d="M17 31 L13 38.5 L24 31 Z" fill="#FAF7F2"/>
+  <rect x="10" y="10" width="26" height="21" rx="7.5" fill="#FAF7F2"/>
+  <!-- Flowing checkmark in emerald -->
+  <path d="M16 20 L20.5 24.5 L30 12.5" fill="none" stroke="#0E5C4A" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Amber accent dot -->
+  <circle cx="33.5" cy="10.5" r="3.4" fill="#C8871E" stroke="#0A4638" stroke-width="1.4"/>
+</svg>
