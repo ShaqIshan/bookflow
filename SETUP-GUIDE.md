@@ -5,13 +5,40 @@ Everything you need, from "just look at it" to "run it on my machine" to
 
 ---
 
+## 0. START HERE — morning checklist ☀️
+
+**See it right now (works today):**
+https://raw.githack.com/ShaqIshan/bookflow/preview/index.html
+→ first visit shows a small githack safety notice — tap **"Open the page"**
+once and the app loads. (This is your personal preview; don't send this one
+to testers.)
+
+**Unlock the real tester link (~2 minutes, one-time):**
+GitHub is currently blocking automated builds on your **ShaqIshan** account —
+this is standard for accounts that haven't finished verification, and only you
+can clear it:
+
+1. Log in at https://github.com — if any banner asks you to **verify your
+   email**, do it (Settings → Emails → resend verification if needed).
+2. Open https://github.com/ShaqIshan/bookflow/actions → click the failed
+   **"pages build and deployment"** run → **Re-run all jobs**.
+   *(Or instead: open a terminal in this BookFlow folder and run `npm run deploy`.)*
+3. ~2 minutes later this is live and permanent — **the link you share with
+   testers:** https://shaqishan.github.io/bookflow/
+
+Everything else (site content, branches, build robot) is already in place —
+that one verification is genuinely the only thing I couldn't do for you.
+
+---
+
 ## 1. The live app (no setup at all)
 
-**Live link:** https://shaqishan.github.io/bookflow/
+**Tester link (after the checklist above):** https://shaqishan.github.io/bookflow/
 
 - Open it on any phone or laptop — it works in the browser immediately.
-- Every time code is pushed to the `main` branch on GitHub, the site
-  **redeploys itself automatically** in ~2 minutes. You never redeploy by hand.
+- To publish an update at any time: run `npm run deploy` from this folder
+  (it rebuilds and pushes the site). Once GitHub finishes verifying your
+  account, pushes to `main` also auto-deploy via the included workflow.
 
 ### Install it like a real app (what to tell testers)
 
