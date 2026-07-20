@@ -9,13 +9,13 @@ import { fmtRM } from "@/lib/money";
 import {
   bookingConfirmationMessage,
   depositReminderMessage,
-  invoiceText,
   waLink,
 } from "@/lib/wa";
 import Icon from "./Icon";
 import Sheet from "./Sheet";
 import StatusChip from "./StatusChip";
 import BookingForm, { type BookingFormValues } from "./BookingForm";
+import { useInvoiceFlow } from "./InvoiceFlow";
 
 interface BookingDetailSheetProps {
   booking: Booking | null;
@@ -44,6 +44,8 @@ export default function BookingDetailSheet({
   const [editing, setEditing] = useState(initialEditing);
   const [confirmDelete, setConfirmDelete] = useState(false);
   const [toast, setToast] = useState("");
+  const [attachInvoice, setAttachInvoice] = useState(false);
+  const { runInvoice, invoiceSheet } = useInvoiceFlow((msg) => flash(msg));
 
   if (!booking) return null;
 
@@ -72,13 +74,19 @@ export default function BookingDetailSheet({
     flash("Booking updated ✓");
   }
 
-  async function copyInvoice() {
-    if (!booking) return;
-    try {
-      await navigator.clipboard.writeText(invoiceText(booking, businessName));
-      flash("Invoice copied — paste it anywhere ✓");
-    } catch {
-      flash("Couldn't copy — try again");
+  function openWhatsApp() {
+    if (!booking?.phone) return;
+    const note = attachInvoice ? "\n\n📎 Sending the invoice PDF along with this." : "";
+    const message =
+      (balanceDue(booking) > 0
+        ? depositReminderMessage(booking, businessName)
+        : bookingConfirmationMessage(booking, businessName)) + note;
+    const url = waLink(booking.phone, message);
+    if (attachInvoice) {
+      // Create/share the PDF first, then open the chat right after
+      runInvoice(booking, () => window.open(url, "_blank", "noopener"));
+    } else {
+      window.open(url, "_blank", "noopener");
     }
   }
 
@@ -197,15 +205,8 @@ export default function BookingDetailSheet({
           {/* WhatsApp + invoice */}
           <div className="grid grid-cols-2 gap-gutter">
             {booking.phone && !cancelled && (
-              <a
-                href={waLink(
-                  booking.phone,
-                  owed > 0
-                    ? depositReminderMessage(booking, businessName)
-                    : bookingConfirmationMessage(booking, businessName),
-                )}
-                target="_blank"
-                rel="noopener noreferrer"
+              <button
+                onClick={openWhatsApp}
                 className={`flex items-center justify-center gap-2 text-label-md py-3.5 rounded-btn transition-opacity hover:opacity-90 ${
                   owed > 0
                     ? "bg-secondary text-on-secondary shadow-sm"
@@ -214,18 +215,34 @@ export default function BookingDetailSheet({
               >
                 <Icon name="send" size={18} />
                 {owed > 0 ? "Send reminder" : "Send confirmation"}
-              </a>
+              </button>
             )}
             <button
-              onClick={copyInvoice}
+              onClick={() => runInvoice(booking)}
               className={`flex items-center justify-center gap-2 border border-outline-variant text-on-surface-variant text-label-md py-3.5 rounded-btn hover:bg-surface-container-low transition-colors ${
                 booking.phone && !cancelled ? "" : "col-span-2"
               }`}
             >
-              <Icon name="receipt_long" size={18} />
-              Copy invoice
+              <Icon name="picture_as_pdf" size={18} />
+              Invoice PDF
+              {booking.invoiceNo && (
+                <span className="text-muted-ink font-normal">· {booking.invoiceNo}</span>
+              )}
             </button>
           </div>
+          {booking.phone && !cancelled && (
+            <button
+              onClick={() => setAttachInvoice(!attachInvoice)}
+              className="flex items-center gap-2.5 -mt-1 px-1 py-1 self-start text-body-sm text-on-surface-variant hover:text-on-surface transition-colors"
+            >
+              <Icon
+                name={attachInvoice ? "check_box" : "check_box_outline_blank"}
+                size={20}
+                className={attachInvoice ? "text-primary" : ""}
+              />
+              Attach the invoice PDF when sending
+            </button>
+          )}
 
           {/* Edit / delete */}
           <div className="flex items-center justify-between border-t border-surface-variant pt-4">
@@ -262,6 +279,7 @@ export default function BookingDetailSheet({
           )}
         </div>
       )}
+      {invoiceSheet}
     </Sheet>
   );
 }

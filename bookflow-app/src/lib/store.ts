@@ -3,7 +3,8 @@
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 import { useSyncExternalStore } from "react";
-import type { Booking, CostRate, Profile, TemplateId } from "./types";
+import type { Booking, CostRate, InvoiceDetails, Profile, TemplateId } from "./types";
+import { EMPTY_INVOICE_DETAILS } from "./types";
 import { getTemplate } from "./templates";
 import { buildSeedBookings, newId } from "./seed";
 
@@ -22,6 +23,10 @@ interface BookFlowState {
   updateBooking: (id: string, patch: Partial<Booking>) => void;
   deleteBooking: (id: string) => void;
   setCostRate: (id: string, amount: number) => void;
+  setInvoiceDetails: (details: InvoiceDetails) => void;
+  markInvoicePromptDone: () => void;
+  /** Returns the booking's invoice number, assigning the next one if new. */
+  assignInvoiceNo: (bookingId: string) => string;
   clearSampleData: () => void;
   resetAll: () => void;
 }
@@ -32,11 +37,14 @@ const EMPTY_PROFILE: Profile = {
   businessName: "",
   ownerName: "",
   seeded: false,
+  invoice: EMPTY_INVOICE_DETAILS,
+  invoiceSeq: 1,
+  invoicePromptDone: false,
 };
 
 export const useBookFlow = create<BookFlowState>()(
   persist(
-    (set) => ({
+    (set, get) => ({
       profile: EMPTY_PROFILE,
       bookings: [],
       costRates: getTemplate("photo-booth").costRates,
@@ -44,6 +52,7 @@ export const useBookFlow = create<BookFlowState>()(
       completeOnboarding: (templateId, businessName, ownerName, withSampleData) =>
         set(() => ({
           profile: {
+            ...EMPTY_PROFILE,
             onboarded: true,
             templateId,
             businessName: businessName || getTemplate(templateId).label,
@@ -77,6 +86,26 @@ export const useBookFlow = create<BookFlowState>()(
           costRates: s.costRates.map((r) => (r.id === id ? { ...r, amount } : r)),
         })),
 
+      setInvoiceDetails: (details) =>
+        set((s) => ({
+          profile: { ...s.profile, invoice: details, invoicePromptDone: true },
+        })),
+
+      markInvoicePromptDone: () =>
+        set((s) => ({ profile: { ...s.profile, invoicePromptDone: true } })),
+
+      assignInvoiceNo: (bookingId) => {
+        const existing = get().bookings.find((b) => b.id === bookingId)?.invoiceNo;
+        if (existing) return existing;
+        const seq = get().profile.invoiceSeq;
+        const invoiceNo = `INV-${new Date().getFullYear()}-${String(seq).padStart(3, "0")}`;
+        set((s) => ({
+          profile: { ...s.profile, invoiceSeq: seq + 1 },
+          bookings: s.bookings.map((b) => (b.id === bookingId ? { ...b, invoiceNo } : b)),
+        }));
+        return invoiceNo;
+      },
+
       clearSampleData: () =>
         set((s) => ({
           bookings: s.bookings.filter((b) => b.source !== "seed"),
@@ -92,7 +121,20 @@ export const useBookFlow = create<BookFlowState>()(
     }),
     {
       name: "bookflow-store-v1",
+      version: 2,
       storage: createJSONStorage(() => localStorage),
+      // Older persisted profiles predate the invoice fields — patch them in.
+      migrate: (persisted) => {
+        const s = persisted as Partial<BookFlowState> | undefined;
+        if (s?.profile) {
+          s.profile = {
+            ...EMPTY_PROFILE,
+            ...s.profile,
+            invoice: { ...EMPTY_INVOICE_DETAILS, ...(s.profile.invoice ?? {}) },
+          };
+        }
+        return s as BookFlowState;
+      },
     },
   ),
 );

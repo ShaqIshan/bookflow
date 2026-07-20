@@ -42,25 +42,3 @@ export function bookingConfirmationMessage(b: Booking, businessName: string): st
   );
 }
 
-/** Plain-text invoice/receipt, ready to paste or share over WhatsApp. */
-export function invoiceText(b: Booking, businessName: string): string {
-  const lines = [
-    `${businessName.toUpperCase()} — BOOKING SUMMARY`,
-    `--------------------------------`,
-    `Booking : ${b.title}`,
-    `Client  : ${b.clientName}`,
-    `Service : ${b.service}`,
-    `Date    : ${fmtDayShort(b.date)}`,
-  ];
-  if (b.startTime) lines.push(`Time    : ${fmtTimeRange(b.startTime, b.endTime)}`);
-  if (b.venue) lines.push(`Venue   : ${b.venue}`);
-  lines.push(
-    `--------------------------------`,
-    `Total   : ${fmtRM(b.total)}`,
-    `Paid    : ${fmtRM(b.paid)}`,
-    `Balance : ${fmtRM(balanceDue(b))}`,
-    `--------------------------------`,
-    `Thank you for booking with ${businessName}!`,
-  );
-  return lines.join("\n");
-}

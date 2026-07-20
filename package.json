@@ -9,5 +9,8 @@
     "test": "npm --prefix bookflow-app test",
     "lint": "npm --prefix bookflow-app run lint",
     "deploy": "npm --prefix bookflow-app run deploy"
+  },
+  "dependencies": {
+    "jspdf": "^4.2.1"
   }
 }

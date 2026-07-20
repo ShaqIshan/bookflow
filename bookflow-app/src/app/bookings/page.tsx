@@ -7,13 +7,13 @@ import type { Booking } from "@/lib/types";
 import { balanceDue } from "@/lib/types";
 import { todayISO } from "@/lib/dates";
 import { fmtRM } from "@/lib/money";
-import { invoiceText } from "@/lib/wa";
 import AppShell from "@/components/AppShell";
 import Gate from "@/components/Gate";
 import Icon from "@/components/Icon";
 import BookingListCard from "@/components/BookingListCard";
 import EmptyState from "@/components/EmptyState";
 import BookingDetailSheet from "@/components/BookingDetailSheet";
+import { useInvoiceFlow } from "@/components/InvoiceFlow";
 
 type Filter = "all" | "upcoming" | "pending" | "past";
 
@@ -79,14 +79,7 @@ function BookingsScreen() {
     setTimeout(() => setToast(""), 2200);
   }
 
-  async function copyInvoice(b: Booking) {
-    try {
-      await navigator.clipboard.writeText(invoiceText(b, businessName));
-      flash("Invoice copied — paste it anywhere ✓");
-    } catch {
-      flash("Couldn't copy — try again");
-    }
-  }
+  const { runInvoice, invoiceSheet } = useInvoiceFlow(flash);
 
   function openDetail(id: string, edit: boolean) {
     setEditOnOpen(edit);
@@ -101,7 +94,7 @@ function BookingsScreen() {
         businessName={businessName}
         onOpen={() => openDetail(b.id, false)}
         onEdit={() => openDetail(b.id, true)}
-        onInvoice={() => copyInvoice(b)}
+        onInvoice={() => runInvoice(b)}
       />
     );
   }
@@ -215,6 +208,8 @@ function BookingsScreen() {
           {toast}
         </p>
       )}
+
+      {invoiceSheet}
 
       <BookingDetailSheet
         key={`${openId}-${editOnOpen}`}

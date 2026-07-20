@@ -20,13 +20,14 @@ import Gate from "@/components/Gate";
 import Icon from "@/components/Icon";
 import BookingForm, { type BookingFormValues } from "@/components/BookingForm";
 import StatusChip from "@/components/StatusChip";
+import { useInvoiceFlow } from "@/components/InvoiceFlow";
 
 type Mode = "paste" | "review" | "edit" | "manual" | "saved";
 
 export default function AddPage() {
   return (
     <Gate>
-      <AppShell>
+      <AppShell active="add">
         <Suspense fallback={null}>
           <AddScreen />
         </Suspense>
@@ -102,6 +103,8 @@ function AddScreen() {
   const [sheetCopy, setSheetCopy] = useState(true);
   const [sheetCopied, setSheetCopied] = useState(false);
   const [hint, setHint] = useState("");
+  const [attachInvoice, setAttachInvoice] = useState(false);
+  const { runInvoice, invoiceSheet } = useInvoiceFlow();
 
   function runParse() {
     if (!raw.trim()) return;
@@ -519,15 +522,39 @@ function AddScreen() {
           </article>
 
           {saved.phone && (
-            <a
-              href={waLink(saved.phone, bookingConfirmationMessage(saved, businessName))}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-full flex items-center justify-center gap-2 bg-primary text-on-primary text-label-md py-4 rounded-btn shadow-md hover:opacity-90 transition-opacity"
-            >
-              <Icon name="send" size={18} />
-              Send confirmation on WhatsApp
-            </a>
+            <>
+              <button
+                onClick={() => {
+                  const note = attachInvoice
+                    ? "\n\n📎 Sending the invoice PDF along with this."
+                    : "";
+                  const url = waLink(
+                    saved.phone!,
+                    bookingConfirmationMessage(saved, businessName) + note,
+                  );
+                  if (attachInvoice) {
+                    runInvoice(saved, () => window.open(url, "_blank", "noopener"));
+                  } else {
+                    window.open(url, "_blank", "noopener");
+                  }
+                }}
+                className="w-full flex items-center justify-center gap-2 bg-primary text-on-primary text-label-md py-4 rounded-btn shadow-md hover:opacity-90 transition-opacity"
+              >
+                <Icon name="send" size={18} />
+                Send confirmation on WhatsApp
+              </button>
+              <button
+                onClick={() => setAttachInvoice(!attachInvoice)}
+                className="flex items-center gap-2.5 -mt-2 px-1 self-center text-body-sm text-on-surface-variant hover:text-on-surface transition-colors"
+              >
+                <Icon
+                  name={attachInvoice ? "check_box" : "check_box_outline_blank"}
+                  size={20}
+                  className={attachInvoice ? "text-primary" : ""}
+                />
+                Attach the invoice PDF too
+              </button>
+            </>
           )}
           <div className="grid grid-cols-2 gap-gutter">
             <button
@@ -547,6 +574,7 @@ function AddScreen() {
           </div>
         </div>
       )}
+      {invoiceSheet}
     </div>
   );
 }

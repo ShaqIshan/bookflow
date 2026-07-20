@@ -82,6 +82,12 @@ npm test        # run the WhatsApp-parser tests
 
 ---
 
+## 2.5 Want to understand / edit the code?
+
+Read **[LEARN-THE-CODE.md](LEARN-THE-CODE.md)** — a from-zero guide to every
+language, framework, and file in this project, written for someone who has
+never touched JavaScript, with diagrams and hands-on exercises.
+
 ## 3. Where everything lives
 
 ```

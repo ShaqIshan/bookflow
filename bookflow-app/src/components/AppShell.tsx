@@ -10,6 +10,8 @@ import { bookingsWithBalance } from "@/lib/money";
 import ChaseList from "./ChaseList";
 import Icon from "./Icon";
 import Sheet from "./Sheet";
+import { InvoiceDetailsFields } from "./InvoiceFlow";
+import { EMPTY_INVOICE_DETAILS } from "@/lib/types";
 
 export type TabId = "home" | "bookings" | "calendar" | "money";
 
@@ -21,7 +23,9 @@ const TABS: { id: TabId; href: string; icon: string; label: string }[] = [
 ];
 
 interface AppShellProps {
-  active?: TabId;
+  /** Which bottom tab is active; "add" flattens the centre FAB so it can't
+      collide with the Add screen's sticky confirm bar. */
+  active?: TabId | "add";
   children: React.ReactNode;
 }
 
@@ -147,16 +151,25 @@ export default function AppShell({ active, children }: AppShellProps) {
         {TABS.slice(0, 2).map((tab) => (
           <TabButton key={tab.id} tab={tab} active={active === tab.id} />
         ))}
-        <div className="w-14 relative flex justify-center h-full">
-          <Link
-            href="/add"
-            aria-label="Add booking"
-            className="bg-primary text-on-primary rounded-full w-14 h-14 absolute -top-7 flex items-center justify-center shadow-lg hover:scale-105 active:scale-95 transition-transform"
-          >
-            <Icon name="add" size={28} />
-          </Link>
-          <span className="text-label-md text-muted-ink absolute bottom-2.5">Add</span>
-        </div>
+        {active === "add" ? (
+          <div className="flex flex-col items-center justify-center w-16 h-16 text-primary">
+            <span className="w-11 h-11 rounded-full bg-primary text-on-primary flex items-center justify-center mb-1">
+              <Icon name="add" size={24} />
+            </span>
+            <span className="text-label-md">Add</span>
+          </div>
+        ) : (
+          <div className="w-14 relative flex justify-center h-full">
+            <Link
+              href="/add"
+              aria-label="Add booking"
+              className="bg-primary text-on-primary rounded-full w-14 h-14 absolute -top-7 flex items-center justify-center shadow-lg hover:scale-105 active:scale-95 transition-transform"
+            >
+              <Icon name="add" size={28} />
+            </Link>
+            <span className="text-label-md text-muted-ink absolute bottom-2.5">Add</span>
+          </div>
+        )}
         {TABS.slice(2).map((tab) => (
           <TabButton key={tab.id} tab={tab} active={active === tab.id} />
         ))}
@@ -208,6 +221,33 @@ function TabButton({
       <Icon name={tab.icon} fill={active} size={24} className="mb-1" />
       <span className="text-label-md">{tab.label}</span>
     </Link>
+  );
+}
+
+/** Collapsible editor for the business details printed on PDF invoices. */
+function InvoiceDetailsSection() {
+  const invoice = useBookFlow((s) => s.profile.invoice) ?? EMPTY_INVOICE_DETAILS;
+  const setInvoiceDetails = useBookFlow((s) => s.setInvoiceDetails);
+  const [open, setOpen] = useState(false);
+
+  return (
+    <div className="border-t border-surface-variant pt-4 mt-2">
+      <button
+        onClick={() => setOpen(!open)}
+        className="w-full flex items-center justify-between py-1 text-left"
+      >
+        <span className="flex items-center gap-2 text-body-md font-semibold text-on-surface">
+          <Icon name="picture_as_pdf" size={20} className="text-primary" />
+          Invoice details
+        </span>
+        <Icon name={open ? "expand_less" : "expand_more"} size={22} className="text-muted-ink" />
+      </button>
+      {open && (
+        <div className="pt-3">
+          <InvoiceDetailsFields value={invoice} onChange={setInvoiceDetails} />
+        </div>
+      )}
+    </div>
   );
 }
 
@@ -313,6 +353,8 @@ function BusinessSettings({
           <p className="text-label-md text-muted-ink">Business template</p>
         </div>
       </div>
+
+      <InvoiceDetailsSection />
 
       <div className="border-t border-surface-variant pt-4 mt-2 flex flex-col gap-stack-gap-sm">
         <ExportCsvButton />

@@ -34,6 +34,17 @@ export interface Booking {
   source: BookingSource;
   rawMessage?: string;
   createdAt: string;
+  /** Assigned the first time an invoice is generated, then stable forever */
+  invoiceNo?: string;
+}
+
+/** Business details printed on PDF invoices. All optional — asked for lazily. */
+export interface InvoiceDetails {
+  phone: string;
+  address: string;
+  regNo: string;
+  /** How clients should pay, e.g. "Maybank 1234 5678 (Coys Affluence)" */
+  payNote: string;
 }
 
 export interface CostRate {
@@ -52,7 +63,19 @@ export interface Profile {
   ownerName: string;
   /** True while the demo sample data is loaded */
   seeded: boolean;
+  invoice: InvoiceDetails;
+  /** Next invoice number in the running sequence */
+  invoiceSeq: number;
+  /** True once we've asked for invoice details (never nag twice) */
+  invoicePromptDone: boolean;
 }
+
+export const EMPTY_INVOICE_DETAILS: InvoiceDetails = {
+  phone: "",
+  address: "",
+  regNo: "",
+  payNote: "",
+};
 
 export type PaymentState =
   | "paid" // fully paid
